@@ -6,9 +6,10 @@
 - Iterative and recursive functions.
 - Complexity analysis of iterative and recursive functions.
 ## Second week, Search and sort algorithms
+### Search algorithms
 - Sequential search with an ordered and unordened vector.
 - Iterative and recursive Binary search.
-### sorting algorithms
+### Sorting algorithms
 - SwapSort
 - SelectionSort
 - BubbleSort
