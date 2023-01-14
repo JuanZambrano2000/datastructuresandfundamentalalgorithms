@@ -1,0 +1,12 @@
+Size: 20
+Sort algorithm choice: 1
+Search algorithm choice: 1
+Data to search: 93
+Proceso de ordenamiento
+Los elementos del vector ordenado son: 
+2 6 14 45 58 81 85 88 93 113 141 295 313 430 755 901 951 1186 5378 97123 
+Numero de comparaciones: 190
+Numero de intercambios: 87
+Proceso de busqueda
+Indice de la key: 8
+Numero de comparaciones: 9
