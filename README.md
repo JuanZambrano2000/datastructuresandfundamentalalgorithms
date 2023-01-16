@@ -1,5 +1,5 @@
 # Programming of data structures and fundamental algorithms (TC1031)
-
+- All files where compiled in replit.com
 ## Repository of the class "fundamental algorithms and data structures"
 ## First week
 - Vectors, how to implement.

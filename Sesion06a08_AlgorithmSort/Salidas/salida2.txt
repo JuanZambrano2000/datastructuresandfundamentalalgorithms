@@ -1,0 +1,9 @@
+Size: 100000
+Print flag: 0
+Merge sort
+	Comparaciones: 1539779
+	Tiempo de ejecución en ms: 103
+Quicksort
+	Comparaciones: 1252164351
+	Intercambios: 984447
+	Tiempo de ejecución en ms: 21601
