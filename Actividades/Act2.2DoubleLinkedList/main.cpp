@@ -49,6 +49,7 @@ int main() {
   miLista.addLast(14);
   miLista.addLast(15);
   miLista.addFirst(50);
+  miLista.addFirst(45);
   miLista.printList();
   std::cout <<"Lista invertida"<<std::endl;
   miLista.invert();

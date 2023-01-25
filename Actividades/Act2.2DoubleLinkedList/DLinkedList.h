@@ -2,6 +2,7 @@
 #define _DLINKEDLIST_H_
 
 #include "DLLNode.h"
+#include <algorithm>
 #include <iostream>
 #include <stdexcept>
 
@@ -292,8 +293,9 @@ template <class T> void DLinkedList<T>::invert() {
   if (head == nullptr && tail == nullptr) {
     throw std::out_of_range("Lista vacia");
   } else {
-    // 1. crea un nuevo nodo y lo hace null, inicializa otro en la cabeza de la
-    // lista
+    // 1. crea un nuevo nodo y lo hace null que sera nuestro nodo para no perder
+    // la referencia al apuntador, inicializa otro en la cabeza de la lista,
+    // otro que apunta a la cabeza para ponerla de cola al final lista
     DLLNode<T> *tmp = nullptr;
     DLLNode<T> *current = head;
     DLLNode<T> *t = head;
@@ -312,15 +314,12 @@ template <class T> void DLinkedList<T>::invert() {
   }
 }
 
-//Realiza un swap (igual que el presente en la libreria std pero capaz de hacerlo con apuntadores)
-template <class T> void DLinkedList<T>::swap(T *a, T *b) {
-  T t = *a;
-  *a = *b;
-  *b = t;
-}
-
-//Codigo para realizar el quick sort, nos apoyamos con la pagina web https://www.geeksforgeeks.org/quick-sort/ 
-//Mantenemos los elementos mas pequenos a la izquierda, este algoritmo tiene un tiempo de ejecucion promedio y en el mejor caso de O(nlogn) y en el peor caso de O(n^2) cuando el pivote siempre es el elemento mas grande
+// Codigo para realizar el quick sort, nos apoyamos con la pagina web
+// https://www.geeksforgeeks.org/quicksort-for-linked-list/
+// Mantenemos los elementos mas
+// pequenos a la izquierda, este algoritmo tiene un tiempo de ejecucion promedio
+// y en el mejor caso de O(nlogn) y en el peor caso de O(n^2) cuando el pivote
+// siempre es el elemento mas grande
 template <class T>
 DLLNode<T> *DLinkedList<T>::partition(DLLNode<T> *l, DLLNode<T> *h) {
   // Establezco pivote como elemento h
@@ -330,15 +329,17 @@ DLLNode<T> *DLinkedList<T>::partition(DLLNode<T> *l, DLLNode<T> *h) {
   for (DLLNode<T> *j = l; j != h; j = j->next) {
     if (j->data <= x) {
       i = (i == nullptr) ? l : i->next;
-      swap(&(i->data), &(j->data));
+      // swap(&(i->data), &(j->data));
+      std::swap(i->data, j->data);
     }
   }
   i = (i == nullptr) ? l : i->next;
-  swap(&(i->data), &(h->data));
+  // swap(&(i->data), &(h->data));
+  std::swap(i->data, h->data);
   return i;
 }
 
-//Llama recursivamente a la funcion partition 
+// Llama recursivamente a la funcion partition
 template <class T> void DLinkedList<T>::_sort(DLLNode<T> *l, DLLNode<T> *h) {
   if (h != nullptr && l != h && l != h->next) {
     DLLNode<T> *p = partition(l, h);
@@ -347,7 +348,8 @@ template <class T> void DLinkedList<T>::_sort(DLLNode<T> *l, DLLNode<T> *h) {
   }
 }
 
-//Metodo usado para que el usuario pueda llamar a la funcion sin ser abrumado por los todos los atributos que este requiere, tiempo de ejecucion de O(1).
+// Metodo usado para que el usuario pueda llamar a la funcion sin ser abrumado
+// por los todos los atributos que este requiere, tiempo de ejecucion de O(1).
 template <class T> void DLinkedList<T>::sort() { _sort(head, tail); }
 
 template <class T>
@@ -370,6 +372,7 @@ DLinkedList<T> DLinkedList<T>::getReversedSublist(int start, int end) {
       p = p->next;
       index++;
     }
+    // Por si quieres la sublista del menor al mayor
     // tmp.invert();
     return tmp;
   }
