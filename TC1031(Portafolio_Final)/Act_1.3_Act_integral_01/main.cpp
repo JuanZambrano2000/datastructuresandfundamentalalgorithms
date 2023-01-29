@@ -1,8 +1,11 @@
+
 /**
- * Ejemplo que implementa objetos de la clase Registro
- * que contienen una fecha-hora convertida a Linux timestamp
- * para realizar comparaciones (sobrecarga de operadores)
- *
+ * Actividad 1.3, Actividad Integral de Conceptos Básicos y Algoritmos Fundamentales
+ * Hecho por los Alumnos:
+ * Juan Pablo Zambrano Barajas A01636420
+ * Samuel García Berenfeld A01642317
+ * TC1031 con el profesor Eduardo Tello
+ * Creado el 17/01/2023, ultima modificacion 26/01/2023
  * Compilacion para debug:
  *    g++ -std=c++17 -g -o main *.cpp
  * Ejecucion con valgrind:
@@ -23,12 +26,12 @@
 
 int main() {
   // Sort con ambos algoritmos
-  VectorRegistros bitacora1("bitacora.txt");
+  //VectorRegistros bitacora1("bitacora.txt");
   VectorRegistros bitacora2("bitacora.txt");
-  bitacora1.bubbleSort();
-  std::cout << "Reporte Algoritmo bubbleSort: " <<std::endl;
-  bitacora1.reporte();
-  bitacora2.quickSort(0, bitacora2.getSize());
+  //bitacora1.bubbleSort();
+  //std::cout << "Reporte Algoritmo bubbleSort: " <<std::endl;
+  //bitacora1.reporte();
+  bitacora2.quickSort(0, bitacora2.getSize()-1);
   std::cout << "Reporte Algoritmo quickSort: " <<std::endl;
   bitacora2.reporte();
   // mandar vector ordenado a archivo .txt

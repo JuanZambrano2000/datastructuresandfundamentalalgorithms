@@ -11,6 +11,7 @@ VectorRegistros::VectorRegistros(std::string nombreArchivo) {
   } else {
     while (!archivo.eof()) {
       std::getline(archivo, mes, ' ');
+      // if (mes.lenght == 0) break;
       std::getline(archivo, dia, ' ');
       std::getline(archivo, horas, ':');
       std::getline(archivo, minutos, ':');
@@ -29,7 +30,7 @@ VectorRegistros::VectorRegistros(std::string nombreArchivo) {
 
 VectorRegistros::~VectorRegistros() {
 }
-
+//regresamos el tamano del texto
 int VectorRegistros::getSize() { return registros.size(); }
 
 /*
@@ -43,25 +44,26 @@ void VectorRegistros::imprime() {
   }
 }
 */
-
+//Crea el archivo de salida 
 void VectorRegistros::imprime(std::string nombreArchivo) {
-  std::ofstream archivoImprime(nombreArchivo);
+  
   if (registros.empty()) {
     std::cout << "No hay registros en el vector B)" << std::endl;
-    archivoImprime.close();
   } 
   else {
-    if(archivoImprime.is_open()){
-      for(int i=0; i<=registros.size();i++){
+    std::ofstream archivoImprime(nombreArchivo);
+    if (!archivoImprime.good()) {
+      archivoImprime.close();
+      std::cout << "Archivo no encontrado" << std::endl;
+    }
+    else {
+      for(int i=0; i < registros.size(); i++) {
         archivoImprime << registros[i].getAll() << std::endl;
       }
     }
-    else{
-      std::cout << "No pude abrir el archivo :(" << std::endl;
-    }
-    }
-  archivoImprime.close();
-  }
+    archivoImprime.close();
+  }  
+}
 
 // Algoritmo ineficiente
 void VectorRegistros::bubbleSort() {
@@ -78,7 +80,7 @@ void VectorRegistros::bubbleSort() {
     }
   }
 }
-
+//Algoritmo eficiente
 void VectorRegistros::quickSort(int low, int high) {
   if (low < high) {
     int pivote = partition(low, high);
@@ -101,7 +103,7 @@ int VectorRegistros::partition(int low, int high) {
   std::swap(registros[i + 1], registros[high]);
   return i + 1;
 }
-
+//Algoritmo para buscar las fechas
 int VectorRegistros::binarySearch(std::string mes, std::string dia,std::string hora, std::string minuto, std::string segundo) {
   Registro dummy(mes, dia, hora, minuto, segundo);
   int low = 0;
@@ -120,7 +122,7 @@ int VectorRegistros::binarySearch(std::string mes, std::string dia,std::string h
   }
   return -1;
 }
-
+//Nos dice los swaps y comparaciones de los algoritmos de ordenamiento
 void VectorRegistros::reporte() {
   std::cout << "Numero de comparaciones hasta ahora: " << compara << std::endl;
   std::cout << "Numero de intercambios hasta ahora: " << swap << std::endl << std::endl;

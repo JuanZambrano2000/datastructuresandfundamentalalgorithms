@@ -11,7 +11,7 @@ Registro::Registro() {
   falla = "";
   fechaHora = 0;
 }
-
+//Constructor que recibe la fecha y nos regresa un numero para poder ser comparado 
 Registro::Registro(std::string _mes, std::string _dia, std::string _horas, std::string _minutos, std::string _segundos, std::string _ip, std::string _puerto, std::string _falla) {
   mes = _mes;
   dia = _dia;
@@ -38,7 +38,7 @@ Registro::Registro(std::string _mes, std::string _dia, std::string _horas, std::
   fechaHora = mktime(&dateStruct);
   //std::cout << "fechaHora: " << fechaHora << std::endl;
 }
-
+//Constructor usado para comparar dos fechas (sin ip, puerto y falla ya que no son necesarios)
 Registro::Registro(std::string _mes, std::string _dia, std::string _horas, std::string _minutos, std::string _segundos) {
   mes = _mes;
   dia = _dia;
