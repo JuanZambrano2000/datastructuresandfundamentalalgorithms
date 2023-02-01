@@ -1,5 +1,8 @@
 # Programming of data structures and fundamental algorithms (TC1031)
 - All programs and files were created, compiled and run replit.com
+- The "Sesion" folders contain code made in class (mostly finished).
+- The "Actividades" folder contain our homework (finished).
+- The "Portafolio_Final" contains the homework at the end of a module.
 ## Repository of the class "fundamental algorithms and data structures"
 ## First week
 - Vectors, how to implement.
