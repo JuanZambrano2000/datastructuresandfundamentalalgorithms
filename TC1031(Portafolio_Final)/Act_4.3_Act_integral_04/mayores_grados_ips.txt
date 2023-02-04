@@ -1,0 +1,5 @@
+Direccion IP: 73.89.221.25, Grado de salida: 18
+Direccion IP: 185.109.34.183, Grado de salida: 18
+Direccion IP: 90.167.116.74, Grado de salida: 17
+Direccion IP: 174.190.90.229, Grado de salida: 17
+Direccion IP: 115.157.160.175, Grado de salida: 17
