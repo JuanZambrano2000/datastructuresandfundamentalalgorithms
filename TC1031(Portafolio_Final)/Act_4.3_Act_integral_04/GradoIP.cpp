@@ -38,3 +38,7 @@ std::ostream& operator<<(std::ostream& os, const GradoIP& gradoIP) {
     os <<"Direccion IP: " << gradoIP.ip << ", Grado de salida: " << gradoIP.grado << std::endl; 
     return os;
 }
+
+int GradoIP::getGrado(){return grado;}
+
+std::string GradoIP::getDireccion(){return ip;}

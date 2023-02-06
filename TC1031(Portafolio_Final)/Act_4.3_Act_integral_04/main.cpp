@@ -19,11 +19,14 @@
 
 int main() {
   Graph graph;
-  //graph.loadGraph("bitacoraGrafos.txt");
   graph.loadGraph("bitacoraGrafos.txt");
-  graph.reporteIPs("grados_ips.txt", "mayores_grados_ips.txt");
+  //graph.loadGraph("bitacoraGrafos.txt");
   //graph.printGraph();
   //graph.printIPs();
+  graph.crearHeap();
+  graph.reporteIPs("grados_ips.txt","mayores_grados_ips.txt");
+  graph.crearHeap();
+  graph.dijkstraAlgorithm("distancia_bootmaster.txt");
 
   return 0;
 }

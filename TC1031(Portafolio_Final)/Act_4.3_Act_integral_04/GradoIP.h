@@ -12,6 +12,8 @@ private:
 public:
   GradoIP();
   GradoIP(ipAddress ip);
+  int getGrado();
+  std::string getDireccion();
   bool operator==(const GradoIP &) const;
   bool operator!=(const GradoIP &) const;
   bool operator>(const GradoIP &) const;

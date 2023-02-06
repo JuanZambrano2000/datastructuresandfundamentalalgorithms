@@ -1,6 +1,6 @@
 #include "Graph.h"
 
-
+//Constructor por defecto
 Graph::Graph() {
   numNodes = 0;
   numEdges = 0;
@@ -8,6 +8,7 @@ Graph::Graph() {
   heapIP.setCapacity(0);
 }
 
+//Destructor
 Graph::~Graph() {
   numNodes = 0;
   numEdges = 0;
@@ -39,7 +40,7 @@ int Graph::findIpIndex(std::string ipString) {
   return ipIndex;
 }
 
-
+//Tiene una complejidad de O(V) donde V es el numero de vertices.
 void Graph::loadGraph(std::string fileName) {
   std::string line, ip1, ip2, peso; 
   int i = 0;
@@ -99,6 +100,7 @@ void Graph::loadGraph(std::string fileName) {
   }
 }
 
+//Tiene una complejidad de O(V+E), donde donde E es el numero de aristas y V el de vertices
 void Graph::printGraph() {
   std::cout << "numNode: " << numNodes << std::endl;
   std::cout << "numEdges: " << numEdges << std::endl;
@@ -115,6 +117,7 @@ void Graph::printGraph() {
   }
 }
 
+//Complejidad O(n), ya que recorre paso por paso todo el map con el fin de imprimir todas las IPs. 
 void Graph::printIPs() {
   std::cout << "IPs" << std::endl;
   std::map<unsigned int, ipAddress>::iterator it;
@@ -123,6 +126,7 @@ void Graph::printIPs() {
   }
 }
 
+//Complejidad O(n), ya que debe recorrer todo el map para poder crear el macHeap necesario para almacenar cada IP con su grado de salida.
 void Graph::crearHeap() {
   if(mapIP.size()==0){
     throw std::out_of_range("No hay elementos que almacenar.");
@@ -132,12 +136,15 @@ void Graph::crearHeap() {
   for (it = mapIP.begin(); it != mapIP.end(); it++) {
     GradoIP temp(it->second);
     heapIP.push(temp);
-  }   
+  }  
+  std::string bm=heapIP.top().getDireccion();
+  bootmaster=findIpIndex(bm);
 }
 
+//Complejidad O(n) ya que recorre todo el heap con el fin de uno por uno irlo vaciando ya sea al archivo, o a pantalla en el caso del botMaster
 void Graph::reporteIPs(std::string reporte, std::string top5) {
-  crearHeap();
   int i = 0;
+  int j=0;
   if (heapIP.isEmpty()) {
     throw std::out_of_range("El max heap se encuentra vacio");
   } else {
@@ -146,20 +153,81 @@ void Graph::reporteIPs(std::string reporte, std::string top5) {
     if (!archivoImprime.good() && !archivoTop5.good()) {
       archivoImprime.close();
       archivoTop5.close();
-      std::cout << "Archivos no encontrado" << std::endl;
+      std::cout << "Archivos no encontrados" << std::endl;
     } else {
-      while (!heapIP.isEmpty()) {
-        //if (heapIP.top().getNumVeces() != 0) {
+      while (j<mapIP.size()-1) {
         archivoImprime << heapIP.top();
         if (i < 5) {
+          if(i<1){
+            std::cout<<"Bootsmaster:"<<std::endl;
+            std::cout<<heapIP.top()<<std::endl;
+          }
           archivoTop5 << heapIP.top();
           i++;
           }
-        //}else
-        //break;
-      heapIP.pop();
+        heapIP.pop();
+        j++;
       }
+      archivoImprime << heapIP.top();
     }
     archivoImprime.close();
   }
 }
+
+// Usamos el algoritmo de dijkstra que tiene una complejidad de O(ELogV) donde E es el numero de aristas y V el de vertices
+void Graph::dijkstraAlgorithm(std::string fileName) {
+  // https://www.geeksforgeeks.org/implement-min-heap-using-stl/
+  // pares (distancia, vertice)
+  std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
+  int src = bootmaster;
+  // Create a vector for distances and initialize all
+  // distances as infinite (INF)
+  std::vector<int> dist(numNodes + 1, INF);
+  // Insert source itself in priority queue and initialize
+  // its distance as 0.
+  pq.push(std::make_pair(0, src));
+  dist[src] = 0;
+  /* Looping till priority queue becomes empty (or all
+  distances are not finalized) */
+  while (!pq.empty()) {
+    int u = pq.top().second;
+    pq.pop();
+    // 'i' is used to get all adjacent vertices of a
+    // vertex
+    // Recorremos los vertices vecinos de v
+    NodeLinkedList<std::pair<int, int>> *ptr = adjList[u].getHead();
+    while (ptr != nullptr) {
+      std::pair<int,int> par = ptr->data;
+      int v = par.first;
+      int weight = par.second;
+      // If there is shorted path to v through u.
+      if (dist[v] > dist[u] + weight) {
+          // Updating distance of v
+          dist[v] = dist[u] + weight;
+          pq.push(std::make_pair(dist[v], v));
+      }
+      ptr = ptr->next;
+    }   
+  }
+  // Export the distances to a file
+  std::ofstream outputFile(fileName);
+  if (!outputFile.good()) {
+    outputFile.close();
+    throw std::invalid_argument("No se pudo abrir el archivo");
+  } else {
+    int maxDistance = dist[1];
+    int maxIndex = 1;
+    std::vector<std::pair<std::string, int>> ipDistances;
+    for (auto it = mapIP.begin(); it != mapIP.end(); ++it) {
+      outputFile << "Ip: " << it->second.getIp() << " | Distancia: " << dist[it->second.getIpIndex()] << std::endl;
+      ipDistances.push_back(make_pair(it->second.getIp(), dist[it->second.getIpIndex()]));
+      if (dist[it->second.getIpIndex()] > maxDistance) {
+        maxDistance = dist[it->second.getIpIndex()];
+        maxIndex = it->second.getIpIndex();
+      } 
+    }
+    std::cout << "Ip mas lejana: " << ipDistances[maxIndex - 1].first << " a una distancia de: " << maxDistance << std::endl; 
+    outputFile.close();
+  }
+}
+
