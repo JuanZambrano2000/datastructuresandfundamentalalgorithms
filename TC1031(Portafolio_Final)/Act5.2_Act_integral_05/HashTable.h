@@ -151,7 +151,7 @@ template <class K, class T> void HashTable<K, T>::remove(K keyVal) {
   table[pos].clearData();
   numElements--;
 }
-
+//tiempo constante O(1), se crea la variable al llenar la hash table
 template <class K, class T> int HashTable<K, T>::getColisiones() {
   return colisiones;
 }
@@ -169,6 +169,7 @@ void HashTable<K, T>::printToFile(std::string fileName) {
       if (table[i].getStatus() == 1) // Cell is used
         file << "Cell: " << i << " Key: " << table[i].getKey()
              << ", Value: " << table[i].getData()
+             << ", Hash Index: " << getHashIndex(table[i].getKey())
              << ", Overflow.size: " << table[i].getOverflowSize() << std::endl;
     }
   }

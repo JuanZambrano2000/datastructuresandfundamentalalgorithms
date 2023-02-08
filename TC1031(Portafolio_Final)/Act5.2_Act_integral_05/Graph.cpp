@@ -32,6 +32,7 @@ void Graph::split(std::string line, std::vector<int> &res) {
   res.push_back(stoi(line.substr(lastPos, line.size() - lastPos)));
 }
 
+//Complejidad de O(n) ya que tiene que iterar los elementos hasta encontrarlo.
 int Graph::findIpIndex(std::string ipString) {
   ipAddress tmpIp(ipString, 0);
   std::map<unsigned int, ipAddress>::iterator it;
@@ -245,6 +246,7 @@ void Graph::dijkstraAlgorithm(std::string fileName) {
   }
 }
 
+//El metodo para cargar la tabla hash tiene una complejidad de O(n) donde n es el tamano del map
 void Graph::loadHashTable() {
   hashTable.setMaxSize(maxElementsHT);
   std::map<unsigned int, ipAddress>::iterator it;
@@ -259,6 +261,7 @@ void Graph::getColisionesHT() {
   std::cout << "Colisiones en HT: " << hashTable.getColisiones() << std::endl;
 }
 
+// El findIpIndex, los iterators y el llenar la lista de IPs tienen una complejidad de O(n), el find del mapIP es de O(logn), por lo que el getIPSummary tiene una complejidad de aproximadamente O(n)
 void Graph::getIPSummary(std::string ip) {
   int i = 0;
   int index = findIpIndex(ip);
@@ -277,8 +280,6 @@ void Graph::getIPSummary(std::string ip) {
     std::cout << "IPs accesadas desde esta IP (descendiente): " << std::endl;
     NodeLinkedList<std::pair<int, int>> *ptr = adjList[index].getHead();
     std::vector<ipAddress> ipsContact(adjList[index].getNumElements());
-    // std::vector<std::pair<std::string,int>> vchoques;
-    // int i=0;
     while (ptr != nullptr) {
       std::pair<int, int> par = ptr->data;
       ipsContact[i] = listaIP[par.first];

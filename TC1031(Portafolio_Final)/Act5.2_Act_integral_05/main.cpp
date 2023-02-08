@@ -1,5 +1,5 @@
 /**
- * Asesoria - Actividad 4.3 (integral de grafos)
+ * Asesoria - Actividad 5.2 (integral de grafos)
  *
  * Compilacion para debug:
  *    g++ -std=c++17 -Wall -g -o main *.cpp
@@ -29,21 +29,13 @@ int main() {
     graph.loadHashTable();
     graph.getColisionesHT();
     graph.printHT();
-    std::cout << "Ingresa una ip" << std::endl;
+    std::cout << "Ingresa una ip: " << std::endl;
     std::cin >> ip;
     try {
       graph.getIPSummary(ip);
     } catch (std::exception &e) {
       std::cout << "Número en formato inválido: " << e.what() << std::endl;
     }
-    // graph.getColisionesHT();
-    // graph.printHT();
-    /*
-    graph.crearHeap();
-    graph.reporteIPs("grados_ips.txt","mayores_grados_ips.txt");
-    graph.crearHeap();
-    graph.dijkstraAlgorithm("distancia_bootmaster.txt");
-    */
   } catch (std::exception &e) {
     std::cout << "Excepcion: " << e.what() << std::endl;
   }
